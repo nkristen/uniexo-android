@@ -4,7 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.ui.Modifier
 import com.unicofrance.uniexo.UniExoApplication
 import com.unicofrance.uniexo.ui.googleMap.GoogleMapScreen
@@ -17,9 +21,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val insets = WindowInsets.systemBars
             GoogleMapScreen(
-                modifier = Modifier.fillMaxSize(),
-                viewModel = GoogleMapViewModel(userRepository = app.userRepository)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = insets.asPaddingValues().calculateTopPadding()),
+                viewModel = GoogleMapViewModel(containerRepository = app.containerRepository)
             )
         }
     }
