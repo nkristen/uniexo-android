@@ -17,7 +17,7 @@ class UniExoApplication : Application() {
 
     private val api: Api by lazy {
         Retrofit.Builder()
-            .baseUrl("https://hello.coucou")
+            .baseUrl("https://exo.dev.unicofrance.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(ResultCallAdapterFactory.create())
             .client(
@@ -37,7 +37,9 @@ class UniExoApplication : Application() {
         ).fallbackToDestructiveMigration(true).build()
     }
 
-    val containerRepository by lazy { ContainerRepository(this, database.containerDao()) }
+    val containerRepository by lazy {
+        ContainerRepository(this, database.containerDao(), api)
+    }
 
     override fun onCreate() {
         super.onCreate()

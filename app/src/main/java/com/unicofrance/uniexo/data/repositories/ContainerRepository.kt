@@ -5,12 +5,15 @@ import android.util.Log
 import com.unicofrance.uniexo.data.local.database.CsvParser
 import com.unicofrance.uniexo.data.local.database.entities.Container
 import com.unicofrance.uniexo.data.local.database.entities.ContainerDao
+import com.unicofrance.uniexo.data.remote.Api
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.collections.emptyList
 
 class ContainerRepository(
     private val context: Context,
-    private val containerDao: ContainerDao
+    private val containerDao: ContainerDao,
+    private val api: Api
 ) {
 
     suspend fun fillIfEmpty() {
@@ -24,6 +27,9 @@ class ContainerRepository(
             context.assets
                 .open("containers.csv")
                 .use { parser.parse(it) }
+
+//            val result = api.getContainers()
+//            result.getOrThrow()
         }
 
         containerDao.insertAll(containers)
